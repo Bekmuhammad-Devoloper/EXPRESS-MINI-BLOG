@@ -1,0 +1,127 @@
+MINI BLOG PROJECT SHARTI 
+ 
+Express.js’da JSON fayllar orqali ishlaydigan oddiy blog API yaratish. 
+Project modullar asosida quriladi: users va posts. 
+Har bir modulda dto, entity, service, controller, router bo‘ladi. 
+Barcha modullar modules.routes.js orqali app.jsga ulanadi. 
+ 
+Papka struktura 
+ 
+mini-blog/ 
+│ 
+├── app.js 
+├── server.js 
+├── .env 
+│ 
+├── lib/ 
+│   ├── resData.js 
+│   ├── repository.js 
+│   ├── customError.js 
+│   ├── error.handler.js 
+│   ├── validator.js 
+│   └── generateID.js 
+│ 
+├── modules/ 
+│   ├── users/ 
+│   │   ├── dto/ 
+│   │   │   ├── create-user.dto.js 
+│   │   │   └── update-user.dto.js 
+│   │   ├── users.entity.js 
+│   │   ├── users.service.js 
+│   │   ├── users.controller.js 
+│   │   └── users.router.js 
+│   │ 
+│   ├── posts/ 
+│   │   ├── dto/ 
+│   │   │   ├── create-post.dto.js 
+│   │   │   └── update-post.dto.js 
+│   │   ├── posts.entity.js 
+│   │   ├── posts.service.js 
+│   │   ├── posts.controller.js 
+│   │   └── posts.router.js 
+│   │ 
+│   └── modules.routes.js 
+│ 
+├── databases/ 
+│   ├── users.json 
+│   └── posts.json 
+│ 
+└── package.json 
+ 
+USERS MODULE 
+ 
+Entity (users.entity.js): 
+{ 
+  id: string, 
+  username: string, 
+  email: string, 
+  bio: string, 
+  createdAt: string 
+} 
+ 
+DTO: 
+create-user.dto.js → username, email majburiy; bio ixtiyoriy 
+update-user.dto.js → hammasi optional 
+ 
+API endpointlar: 
+POST /users → yangi user 
+GET /users → barcha userlar 
+GET /users/:id → bitta user 
+PUT /users/:id → yangilash 
+DELETE /users/:id → o‘chirish 
+ 
+POSTS MODULE 
+ 
+Entity (posts.entity.js): 
+{ 
+  id: string, 
+  authorId: string, 
+  title: string, 
+  content: string, 
+  createdAt: string,
+updatedAt: string 
+} 
+ 
+DTO: 
+create-post.dto.js → authorId, title, content majburiy 
+update-post.dto.js → title, content optional 
+ 
+API endpointlar: 
+POST /posts → yangi post 
+GET /posts → barcha postlar 
+GET /posts/:id → bitta post 
+PUT /posts/:id → yangilash 
+DELETE /posts/:id → o‘chirish 
+GET /posts/author/:userId → user postlari 
+ 
+LIB FAYLLAR 
+ 
+resData.js → response format 
+repository.js → JSON bilan o‘qish/yozish 
+customError.js → xatolar classi 
+error.handler.js → global error middleware 
+validator.js → DTO tekshiruvchi 
+generateID.js → unique ID generator 
+ 
+.env 
+PORT=4000 
+NODE_ENV=development 
+Yurgizish tartibi 
+1. npm init -y 
+2. npm i express dotenv 
+3. node server.js 
+API misollar 
+ 
+POST /users 
+{ 
+  "username": "binyaminn", 
+  "email": "binyaminn@example.com", 
+  "bio": "Backend developer" 
+} 
+ 
+POST /posts 
+{ 
+  "authorId": "1728132941", 
+  "title": "Express mini blog", 
+  "content": "Bu mening birinchi blog postim" 
+}
